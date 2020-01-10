@@ -11,7 +11,7 @@ import math
 This node will publish waypoints from the car's current position to some `x` distance ahead.
 
 As mentioned in the doc, you should ideally first implement a version which does not care
-about traffic lights or obstacles.
+about traffic lights or obstacles.cd 
 
 Once you have created dbw_node, you will update this node to use the status of traffic lights too.
 
@@ -48,7 +48,7 @@ class WaypointUpdater(object):
         self.loop()
 
     def loop(self):
-        rate = rospy.Rate(50)  # can be set lower, e.g. to 30 Hertz or less
+        rate = rospy.Rate(30)  # can be set lower, e.g. to 30 Hertz or less
         while not rospy.is_shutdown():
             if self.pose and self.base_waypoints:  # if pose and base_waypoints are initialized
                 # Get closest waypoint
