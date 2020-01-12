@@ -69,7 +69,7 @@ class DBWNode(object):
         # check by roslaunch and then, in another terminal rostopic info /topic with rosmsg info MsgType
         rospy.Subscriber('/vehicle/dbw_enabled', Bool, self.dbw_enabled_cb)
         rospy.Subscriber('/twist_cmd', TwistStamped, self.twist_cb)
-        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_db)
+        rospy.Subscriber('/current_velocity', TwistStamped, self.velocity_cb)
 
         self.current_vel = None
         self.curr_ang_vel = None
@@ -99,7 +99,7 @@ class DBWNode(object):
         self.linear_vel = msg.twist.linear.x
         self.angular_vel = msg.twist.angular.z
     
-    def velocity_db(self, msg):
+    def velocity_cb(self, msg):
         self.current_vel = msg.twist.linear.x
 
     def publish(self, throttle, brake, steer):
