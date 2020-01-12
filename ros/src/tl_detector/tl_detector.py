@@ -141,6 +141,13 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
+
+        # MAPPING:
+        # RED = 0
+        # YELLOW = 1
+        # GREEN = 2
+
+        # see /vehicle/traffic_lights state
         # light = None
         closest_light = None
         line_wp_idx = None
@@ -165,6 +172,8 @@ class TLDetector(object):
         if closest_light:
             state = self.get_light_state(closest_light)  # get state of closest light
             return line_wp_idx, state
+
+        
 
         return -1, TrafficLight.UNKNOWN  # if there is no traffic light
 
