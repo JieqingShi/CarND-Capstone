@@ -24,7 +24,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 '''
 
 # LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this number
-LOOKAHEAD_WPS = 75
+LOOKAHEAD_WPS = 70
 MAX_DECEL = .5
 
 
@@ -44,19 +44,13 @@ class WaypointUpdater(object):
 
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
-
-
         # rospy.spin()
         self.loop()
 
     def loop(self):
-        rate = rospy.Rate(30)  # can be set lower, e.g. to 30 Hertz or less
+        rate = rospy.Rate(20)  # can be set lower, e.g. to 30 Hertz or less
         while not rospy.is_shutdown():
-            # if self.pose and self.base_waypoints:  # if pose and base_waypoints are initialized
             if self.pose and self.base_lane:
-                # Get closest waypoint
-                # closest_waypoint_idx = self.get_closest_waypoint_idx()
-                # self.publish_waypoints(closest_waypoint_idx)
                 self.publish_waypoints()
             rate.sleep()
 
@@ -81,11 +75,6 @@ class WaypointUpdater(object):
         return closest_idx
 
 
-    # def publish_waypoints(self, closest_idx):
-        # lane = Lane()
-        # lane.header = self.base_waypoints.header
-        # lane.waypoints = self.base_waypoints.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]  # publish all waypoints which are ahead of car
-        # self.final_waypoints_pub.publish(lane)
     def publish_waypoints(self):
         final_lane = self.generate_lane()
         self.final_waypoints_pub.publish(final_lane)
@@ -125,7 +114,7 @@ class WaypointUpdater(object):
         self.pose = msg
 
     def waypoints_cb(self, waypoints):
-        self.base_waypoints = waypoints  # make sure attribute is initialized before subscriber
+        self.lane = waypoints  # make sure attribute is initialized before subscriber
         if not self.waypoints_2d:
             # construct waypoints as 2d coordinates
             self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
