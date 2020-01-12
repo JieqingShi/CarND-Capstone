@@ -52,10 +52,12 @@ class WaypointUpdater(object):
     def loop(self):
         rate = rospy.Rate(30)  # can be set lower, e.g. to 30 Hertz or less
         while not rospy.is_shutdown():
-            if self.pose and self.base_waypoints:  # if pose and base_waypoints are initialized
+            # if self.pose and self.base_waypoints:  # if pose and base_waypoints are initialized
+            if self.pose and self.base_lane:
                 # Get closest waypoint
-                closest_waypoint_idx = self.get_closest_waypoint_idx()
-                self.publish_waypoints(closest_waypoint_idx)
+                # closest_waypoint_idx = self.get_closest_waypoint_idx()
+                # self.publish_waypoints(closest_waypoint_idx)
+                self.publish_waypoints()
             rate.sleep()
 
     def get_closest_waypoint_idx(self):
@@ -79,11 +81,12 @@ class WaypointUpdater(object):
         return closest_idx
 
 
-    def publish_waypoints(self, closest_idx):
+    # def publish_waypoints(self, closest_idx):
         # lane = Lane()
         # lane.header = self.base_waypoints.header
         # lane.waypoints = self.base_waypoints.waypoints[closest_idx:closest_idx + LOOKAHEAD_WPS]  # publish all waypoints which are ahead of car
         # self.final_waypoints_pub.publish(lane)
+    def publish_waypoints(self):
         final_lane = self.generate_lane()
         self.final_waypoints_pub.publish(final_lane)
 
@@ -92,8 +95,9 @@ class WaypointUpdater(object):
         closest_idx = self.get_closest_waypoint_idx()
         farthest_idx = closest_idx + LOOKAHEAD_WPS
         base_waypoints = self.base_lane.waypoints[closest_idx:farthest_idx]
+        
 
-        if self.stopline_wp_idx == -1 or (self.stopline_wp_idx >= farthest_idx):
+        if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest_idx):
             lane.waypoints = base_waypoints  # if further than currently farthest waypoint, publish waypoints
 
         else:
