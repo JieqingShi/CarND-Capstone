@@ -1,6 +1,8 @@
 *.py[cod]
-
+models
+tl_classifier_data
 build
 devel
-
+data/*.record
 profile.tmp
+
