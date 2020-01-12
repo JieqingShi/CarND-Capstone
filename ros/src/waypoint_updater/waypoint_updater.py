@@ -114,7 +114,7 @@ class WaypointUpdater(object):
         self.pose = msg
 
     def waypoints_cb(self, waypoints):
-        self.lane = waypoints  # make sure attribute is initialized before subscriber
+        self.base_lane = waypoints  # make sure attribute is initialized before subscriber
         if not self.waypoints_2d:
             # construct waypoints as 2d coordinates
             self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
