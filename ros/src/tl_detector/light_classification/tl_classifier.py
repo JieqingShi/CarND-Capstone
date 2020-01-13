@@ -17,8 +17,7 @@ class TLClassifier(object):
         with self.graph.as_default():
             od_graph_def = tf.GraphDef()
             with tf.gfile.GFile(path_graph, "rb") as fid:
-                serialized_graph = fid.read()
-                od_graph_def.ParseFromString(serialized_graph)
+                od_graph_def.ParseFromString(fid.read())
                 tf.import_graph_def(od_graph_def, name='')
 
             # maybe not all are needed
@@ -46,9 +45,12 @@ class TLClassifier(object):
             (boxes, scores, classes, num_detections) = self.sess.run([self.boxes, self.scores, self.classes, self.num_detections], feed_dict={self.image_tensor: image_exp})
 
         # get rid of the unnecessary dimension
-        boxes = boxes[0]  # not needed
-        scores = scores[0]
-        classes = classes[0].astype(np.int32)  # check if astype is needed
+        # boxes = boxes[0]  # not needed
+        # scores = scores[0]
+        # classes = classes[0].astype(np.int32)  # check if astype is needed
+        boxes = np.squeeze(boxes)
+        scores = np.squeeze(scores)
+        classes = np.squeeze(classes).astype(np.int32)
 
         # The list is sorted, therefore the first score is the highest
         if scores[0] > self.thresh:
