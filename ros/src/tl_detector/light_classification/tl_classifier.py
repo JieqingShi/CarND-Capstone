@@ -10,7 +10,7 @@ from class number return TrafficLight attribute (e.g. TrafficLight.GREEN)
 class TLClassifier(object):
     def __init__(self):
         # path_model = "models/ssd_inception_v2_coco_2017_11_17/frozen_inference_graph.pb"  # ToDo: Change to trained model
-        path_graph = "model/tl_model_ssd_inception_v2/frozen_inference_graph.pb"
+        path_graph = "ros/src/tl_detector/light_classification/model/tl_model_ssd_inception_v2/frozen_inference_graph.pb"
         self.graph = tf.Graph()
         self.thresh = 0.5
 
