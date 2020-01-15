@@ -48,7 +48,7 @@ class WaypointUpdater(object):
         self.loop()
 
     def loop(self):
-        rate = rospy.Rate(50)  # can be set lower, e.g. to 30 Hertz or less
+        rate = rospy.Rate(10)  # can be set lower, e.g. to 30 Hertz or less
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
                 self.publish_waypoints()
