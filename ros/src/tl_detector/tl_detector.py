@@ -131,15 +131,17 @@ class TLDetector(object):
             return False
 
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-        self.tl_counter += 1
 
         #Get classification
         # adding traffic light counter condition (this is supposed to classify every third image)
-        if self.tl_counter % 5 == 0:
+        if self.tl_counter == 0:
             self.classified_light = self.light_classifier.get_classification(cv_image)
-            self.tl_counter = 0
+            self.tl_counter = 5
+        else:
+            self.tl_counter = -1
 
-        return self.light_classifier.get_classification(cv_image)
+        # return self.light_classifier.get_classification(cv_image)
+        return self.classified_light
 
         # return light.state
 
