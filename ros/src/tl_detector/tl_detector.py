@@ -52,10 +52,6 @@ class TLDetector(object):
         self.last_wp = -1
         self.state_count = 0
 
-        # add traffic light counter to see if it helps
-        self.tl_counter = 0
-        self.classified_light = TrafficLight.UNKNOWN
-
         rospy.spin()
         # could use different version with custom frequency
 
@@ -130,20 +126,17 @@ class TLDetector(object):
             self.prev_light_loc = None
             return False
 
-        if self.camera_image:
-            self.tl_counter += 1
-            if self.tl_counter % 5 == 0:
-                cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-                self.classified_light = self.light_classifier.get_classification(cv_image)
-                self.tl_counter = 0
-        # cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-        
+        """ DOES NOT WORK, SLOWS EVERYTHING DOWN """
+        # if self.camera_image:
+        #     self.tl_counter += 1
+        #     if self.tl_counter % 5 == 0:
+        #         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
+        #         self.classified_light = self.light_classifier.get_classification(cv_image)
+        #         self.tl_counter = 0
 
-        #Get classification
-        # adding traffic light counter condition (this is supposed to classify every third image)
+        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
-        # return self.light_classifier.get_classification(cv_image)
-        return self.classified_light
+        return self.light_classifier.get_classification(cv_image)
 
         # return light.state
 
