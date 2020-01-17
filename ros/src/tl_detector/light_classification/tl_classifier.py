@@ -1,11 +1,14 @@
 from styx_msgs.msg import TrafficLight
 import tensorflow as tf
 import numpy as np
+import rospy
 
 """ Load frozen inference graph; get scores and classes -> 
 define threshold (e.g. 0.5); if score > threshold -> return class
 from class number return TrafficLight attribute (e.g. TrafficLight.GREEN)
 """
+
+MIN_SCORE_THRESHOLD = 0.5
 
 class TLClassifier(object):
     def __init__(self):
@@ -51,15 +54,15 @@ class TLClassifier(object):
         
         # The list is sorted, therefore the first score is the highest
         # Todo: print score and classes as well in a pretty way,
-        if scores[0] > self.thresh:
+        if scores[0] > MIN_SCORE_THRESHOLD:
             if classes[0] == 1:
-                print("GREEN Light detected")
+                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
                 return TrafficLight.GREEN
             elif classes[0] == 2:
-                print("RED Light detected")
+                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
                 return TrafficLight.RED
             elif classes[0] == 3:
-                print("YELLOW Light detected")
+                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
                 return TrafficLight.YELLOW
 
         return TrafficLight.UNKNOWN

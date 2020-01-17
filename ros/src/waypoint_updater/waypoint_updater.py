@@ -85,7 +85,6 @@ class WaypointUpdater(object):
         farthest_idx = closest_idx + LOOKAHEAD_WPS
         base_waypoints = self.base_lane.waypoints[closest_idx:farthest_idx]
         
-
         if (self.stopline_wp_idx == -1) or (self.stopline_wp_idx >= farthest_idx):
             lane.waypoints = base_waypoints  # if further than currently farthest waypoint, publish waypoints
 
@@ -101,7 +100,6 @@ class WaypointUpdater(object):
             stop_idx = max(self.stopline_wp_idx - closest_idx - 3, 0)  # make car not go over the line
             dist = self.distance(waypoints, i, stop_idx)
             # vel = math.sqrt(2 * MAX_DECEL * dist)  # could change function to get smoother deceleration
-            # vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
             if dist <= 20:
                 vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
             else:
