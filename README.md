@@ -1,11 +1,11 @@
 # Udacity Self Driving Car Nanodegree - Capstone Project
 
 In the final project of the Udacity Self Driving Car Nanodegree the goal is to 
-integrate the different system components to get a self-driving car running.
+integrate the different system components of a self-driving car.
 
 Due to me submitting as in individual, the code will not be tested on a real test track, only in the simulator.
 
-The goal is to implement ROS nodes for waypoint generation, drive-by-wire and traffic light detection such that the car in the simulator is able to follow the waypoints, accelerate, decelerate, keep lanes and stop at red traffic lights. 
+The objective of the capstone project is to implement ROS nodes for waypoint generation, drive-by-wire and traffic light detection such that the car in the simulator is able to follow the waypoints, accelerate, decelerate, steer and stop at red traffic lights. 
 
 ## Architecture
 ROS nodes and topics used in this project comprise of three modules: perception, planning and control
