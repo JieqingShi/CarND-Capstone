@@ -4,5 +4,6 @@ tl_classifier_data
 build
 devel
 data/*.record
+video
 profile.tmp
 
