@@ -55,13 +55,13 @@ class TLClassifier(object):
         # The list is sorted, therefore the first score is the highest
         if scores[0] > MIN_SCORE_THRESHOLD:
             if classes[0] == 1:
-                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
+                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
                 return TrafficLight.GREEN
             elif classes[0] == 2:
-                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
+                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
                 return TrafficLight.RED
             elif classes[0] == 3:
-                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
+                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
                 return TrafficLight.YELLOW
 
         return TrafficLight.UNKNOWN
