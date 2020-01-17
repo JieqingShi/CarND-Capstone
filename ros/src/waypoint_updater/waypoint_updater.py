@@ -102,7 +102,6 @@ class WaypointUpdater(object):
             dist = self.distance(waypoints, i, stop_idx)
             # vel = math.sqrt(2 * MAX_DECEL * dist)  # could change function to get smoother deceleration
             if dist <= 20:
-                rospy.logwarn("ENGAGE IN BRAKING!")
                 vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
             else:
                 vel = wp.twist.twist.linear.x - wp.twist.twist.linear.x / dist
