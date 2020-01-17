@@ -23,7 +23,6 @@ class TLClassifier(object):
                 od_graph_def.ParseFromString(fid.read())
                 tf.import_graph_def(od_graph_def, name='')
 
-            # maybe not all are needed
             self.image_tensor = self.graph.get_tensor_by_name("image_tensor:0")
             self.boxes = self.graph.get_tensor_by_name("detection_boxes:0")  # bounding boxes: coordinates of detected b-boxes
             self.scores = self.graph.get_tensor_by_name("detection_scores:0")  # class scores of detections (list of list with one element)
@@ -55,13 +54,13 @@ class TLClassifier(object):
         # The list is sorted, therefore the first score is the highest
         if scores[0] > MIN_SCORE_THRESHOLD:
             if classes[0] == 1:
-                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
                 return TrafficLight.GREEN
             elif classes[0] == 2:
-                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
                 return TrafficLight.RED
             elif classes[0] == 3:
-                #rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
                 return TrafficLight.YELLOW
 
         return TrafficLight.UNKNOWN
