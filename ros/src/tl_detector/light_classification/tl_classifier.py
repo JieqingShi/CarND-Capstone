@@ -12,11 +12,11 @@ MIN_SCORE_THRESHOLD = 0.5
 
 class TLClassifier(object):
     def __init__(self):
-        # path_graph = "light_classification/model/tl_model_ssd_inception_v2/frozen_inference_graph.pb"
+        
         path_graph = "light_classification/model/tl_model.pb"
         self.graph = tf.Graph()
-        self.thresh = 0.5
 
+        # basically boilerplate code
         with self.graph.as_default():
             od_graph_def = tf.GraphDef()
             with tf.gfile.GFile(path_graph, "rb") as fid:
@@ -47,22 +47,21 @@ class TLClassifier(object):
             (_, scores, classes, _) = \
                     self.sess.run([self.boxes, self.scores, self.classes, self.num_detections], feed_dict={self.image_tensor: image_exp})
 
-        # get rid of the unnecessary dimension
+        # get rid of the unnecessary dimensions
         # boxes = boxes[0]  # not needed
         scores = scores[0]
         classes = classes[0]
         
         # The list is sorted, therefore the first score is the highest
-        # Todo: print score and classes as well in a pretty way,
         if scores[0] > MIN_SCORE_THRESHOLD:
             if classes[0] == 1:
-                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "GREEN"))
                 return TrafficLight.GREEN
             elif classes[0] == 2:
-                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "RED"))
                 return TrafficLight.RED
             elif classes[0] == 3:
-                rospy.logwarn("SCORE = {0} ------ || ------ DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
+                rospy.logwarn("SCORE = {0} || DETECTED TRAFFIC LIGHT = {1}".format(scores[0], "YELLOW"))
                 return TrafficLight.YELLOW
 
         return TrafficLight.UNKNOWN

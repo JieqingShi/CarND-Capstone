@@ -26,6 +26,7 @@ TODO (for Yousuf and Aaron): Stopline location for each traffic light.
 # LOOKAHEAD_WPS = 200 # Number of waypoints we will publish. You can change this number
 LOOKAHEAD_WPS = 50
 MAX_DECEL = .5
+ROSPY_RATE = 10
 
 
 class WaypointUpdater(object):
@@ -48,7 +49,7 @@ class WaypointUpdater(object):
         self.loop()
 
     def loop(self):
-        rate = rospy.Rate(10)  # can be set lower, e.g. to 30 Hertz or less
+        rate = rospy.Rate(ROSPY_RATE)  # set pretty low to reduce lag induced by turning on camera images
         while not rospy.is_shutdown():
             if self.pose and self.base_lane:
                 self.publish_waypoints()
@@ -101,6 +102,7 @@ class WaypointUpdater(object):
             dist = self.distance(waypoints, i, stop_idx)
             # vel = math.sqrt(2 * MAX_DECEL * dist)  # could change function to get smoother deceleration
             if dist <= 20:
+                rospy.logwarn("ENGAGE IN BRAKING!")
                 vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
             else:
                 vel = wp.twist.twist.linear.x - wp.twist.twist.linear.x / dist
@@ -128,7 +130,7 @@ class WaypointUpdater(object):
         self.stopline_wp_idx = msg.data
 
     def obstacle_cb(self, msg):
-        # TODO: Callback for /obstacle_waypoint message. We will implement it later
+        # NOT NEEDED
         pass
 
     def get_waypoint_velocity(self, waypoint):
