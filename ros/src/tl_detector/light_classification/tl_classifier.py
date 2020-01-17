@@ -41,16 +41,18 @@ class TLClassifier(object):
         """
         with self.graph.as_default():
             image_exp = np.expand_dims(image, axis=0)
-            # could time the execution of this block
-            (boxes, scores, classes, num_detections) = self.sess.run([self.boxes, self.scores, self.classes, self.num_detections], feed_dict={self.image_tensor: image_exp})
+            (boxes, scores, classes, _) = 
+                    self.sess.run([self.boxes, self.scores, self.classes, self.num_detections], feed_dict={self.image_tensor: image_exp})
 
         # get rid of the unnecessary dimension
-        # boxes = boxes[0]  # not needed
-        # scores = scores[0]
+        boxes = boxes[0]  # not needed
+        scores = scores[0]
         # classes = classes[0].astype(np.int32)  # check if astype is needed
-        boxes = np.squeeze(boxes)
-        scores = np.squeeze(scores)
-        classes = np.squeeze(classes).astype(np.int32)
+        classes = classes[0]
+        
+        # boxes = np.squeeze(boxes)
+        # scores = np.squeeze(scores)
+        # classes = np.squeeze(classes).astype(np.int32)
 
         # The list is sorted, therefore the first score is the highest
         # Todo: print score and classes as well in a pretty way,
