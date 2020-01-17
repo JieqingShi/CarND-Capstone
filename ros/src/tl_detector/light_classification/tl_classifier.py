@@ -41,7 +41,7 @@ class TLClassifier(object):
         """
         with self.graph.as_default():
             image_exp = np.expand_dims(image, axis=0)
-            (boxes, scores, classes, _) = 
+            (boxes, scores, classes, _) = \
                     self.sess.run([self.boxes, self.scores, self.classes, self.num_detections], feed_dict={self.image_tensor: image_exp})
 
         # get rid of the unnecessary dimension
