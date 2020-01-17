@@ -102,11 +102,11 @@ class WaypointUpdater(object):
             dist = self.distance(waypoints, i, stop_idx)
             # vel = math.sqrt(2 * MAX_DECEL * dist)  # could change function to get smoother deceleration
             # vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
-            if dist <= 10:
+            if dist <= 20:
                 vel = math.sqrt(2 * MAX_DECEL * dist) + (i * 1/LOOKAHEAD_WPS)
             else:
                 vel = wp.twist.twist.linear.x - wp.twist.twist.linear.x / dist
-                
+
             if vel < 1.:
                 vel = 0.
             p.twist.twist.linear.x = min(vel, wp.twist.twist.linear.x)
