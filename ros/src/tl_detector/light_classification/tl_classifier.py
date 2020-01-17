@@ -53,6 +53,7 @@ class TLClassifier(object):
         classes = np.squeeze(classes).astype(np.int32)
 
         # The list is sorted, therefore the first score is the highest
+        # Todo: print score and classes as well in a pretty way,
         if scores[0] > self.thresh:
             if classes[0] == 1:
                 print("GREEN Light detected")
