@@ -41,7 +41,7 @@ class TLDetector(object):
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
         self.is_site = self.config["is_site"]
-        rospy.logwarn("is_site = {}".format(self.is_site)))
+        rospy.logwarn("is_site = {}".format(self.is_site))
 
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
 
