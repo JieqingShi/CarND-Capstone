@@ -11,9 +11,12 @@ from class number return TrafficLight attribute (e.g. TrafficLight.GREEN)
 MIN_SCORE_THRESHOLD = 0.5
 
 class TLClassifier(object):
-    def __init__(self):
+    def __init__(self, is_site):
         
-        path_graph = "light_classification/model/tl_model.pb"
+        if is_site:
+            path_graph = "light_classification/model/tl_model_site.pb"
+        else:
+            path_graph = "light_classification/model/tl_model.pb"
         self.graph = tf.Graph()
 
         # basically boilerplate code
